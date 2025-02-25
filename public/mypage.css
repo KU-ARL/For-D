@@ -1,0 +1,107 @@
+/* ========== 기본 리셋 ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* ========== BODY 레이아웃 ========== */
+  body {
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+    background-color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+  }
+  
+  html, body {
+    height: 100%;
+  }
+  
+  /* 
+    bodybox: 모바일/웹 공용 레이아웃
+    - 모바일에서는 가로폭 100% 
+    - 데스크탑(웹)에서는 최대 475px 
+    - 높이는 100vh, 내용이 많으면 세로 스크롤
+  */
+  .bodybox {
+    width: 100%;
+    max-width: 475px;
+    height: 100vh;
+    overflow-y: auto;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    background-color: #F8F6E9;
+  }
+  
+  /* container: 실제 콘텐츠를 담는 컨테이너 */
+  .container {
+    width: 100%;
+    background-color: #F8F6E9;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* header1: 로고 영역 */
+  .header1 {
+    text-align: center;
+    padding: 10px;
+    padding-bottom: 0;
+  }
+  .header1 .logo {
+    max-width: 100px;
+    width: 50%;
+  }
+  
+  /* header2: 버튼 영역 */
+  .header2 {
+    display: flex;
+    justify-content: flex-end;
+    padding: 10px;
+    padding-top: 0;
+  }
+  .cart-btn {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 8px 16px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-left: 10px;
+  }
+  
+  /* main-content: 주요 콘텐츠 영역 */
+  .main-content {
+    padding: 15px;
+  }
+  
+  .main-content h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* 마이페이지의 사용자 정보 스타일 */
+  .user-info {
+    background: #f9f9f9;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 0 auto;
+    max-width: 100%;
+  }
+  
+  .user-info img {
+    max-width: 150px;
+    border-radius: 50%;
+    display: block;
+    margin: 0 auto 15px;
+  }
+  
+  .user-info p {
+    font-size: 16px;
+    margin: 8px 0;
+    text-align: center;
+  }
+  
