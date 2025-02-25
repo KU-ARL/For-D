@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <!-- 모바일 기기에서 적절한 스케일로 보이도록 설정 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인 시작 페이지</title>
+  <!-- CSS 연결 -->
+  <link rel="stylesheet" href="startpage.css">
+</head>
+<body>
+  <!-- bodybox: 모바일/웹 공용 레이아웃 최상위 -->
+  <div class="bodybox">
+    <!-- 실제 페이지 콘텐츠를 담는 container -->
+    <div class="container">
+      <!-- header1: 로고 영역 -->
+      <header class="header1">
+        <img src="/LOGO.jpg" alt="Logo" class="logo">
+      </header>
+
+      <!-- 메인 콘텐츠 -->
+      <main class="main-content">
+        <section class="login-section">
+          <div class="divider"></div>
+          <!-- 로그인 버튼 영역 -->
+          <button class="login-btn">
+            <div id="kakao_login">
+              <!-- 이미지 클릭 시 menupage.html로 이동 -->
+              <a href="menupage.html">
+                <img src="/kakao_login_medium_narrow.png" alt="카카오 로그인">
+              </a>
+            </div>
+            <div id="naver_login">
+              <img src="/btnG_완성형.png" alt="네이버 로그인">
+            </div>
+          </button>
+        </section>
+      </main>
+    </div>
+  </div>
+</body>
+</html>

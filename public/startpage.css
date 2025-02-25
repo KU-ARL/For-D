@@ -1,0 +1,107 @@
+/* 기본 리셋 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+
+
+/* 바디: 전체 화면을 채우며 중앙 정렬 */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* bodybox: 배경색 #F8F6E9, 최대 폭 475px, 전체 높이(100vh) 채움, 내부 콘텐츠 중앙 정렬 */
+.bodybox {
+  background-color: #F8F6E9;
+  width: 100%;
+  max-width: 475px;
+  height: 100vh;
+  overflow-y: auto;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center; /* 세로 중앙 정렬 */
+  align-items: center;     /* 가로 중앙 정렬 */
+}
+
+/* container: 내부 콘텐츠 영역 (필요한 패딩 추가) */
+.container {
+  width: 100%;
+  padding: 20px;
+}
+
+/* header1: 로고 영역 */
+.header1 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.logo {
+  max-width: 200px;
+  width: 80%;
+}
+
+/* main-content: 본문 영역 */
+.main-content {
+  width: 100%;
+}
+
+/* 로그인 섹션 */
+.login-section {
+  text-align: center;
+}
+
+/* divider: 구분선 */
+.divider {
+  width: 60%;
+  height: 2px;
+  background-color: #ccc;
+  margin: 0 auto 20px;
+}
+
+/* 로그인 버튼 전체 영역 */
+.login-btn {
+  background-color: #F8F6E9;
+  border: none;
+  width: 100%;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 10px 0;
+}
+
+
+/* 로그인 이미지 공통 스타일 */
+.login-btn img {
+  vertical-align: middle;
+  max-height: 40px;
+  width: 100%;
+  object-fit: contain;
+}
+
+/* 카카오 로그인 영역 */
+#kakao_login {
+  background-color: #FEE500;
+  width: 60%;
+  border-radius: 4px;
+  margin: 0 auto;
+  padding: 5px 0;
+}
+
+/* 네이버 로그인 영역 */
+#naver_login {
+  background-color: #03C75A;
+  width: 60%;
+  border-radius: 4px;
+  margin: 0 auto;
+  padding: 5px 0;
+}

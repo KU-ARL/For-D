@@ -1,0 +1,180 @@
+/* ========== 기본 리셋 ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* html, body 높이 100% 설정 */
+  html, body {
+    height: 100%;
+    font-family: 'Helvetica Neue', Arial, sans-serif;
+  }
+  
+  /* body: 화면 중앙 정렬을 위해 flex 사용 */
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+  }
+  
+  /* 
+    bodybox: 
+    - 모바일/웹 공용 레이아웃 
+    - 최대 폭 475px 
+    - 높이 100vh 
+    - 배경색 #F8F6E9 
+    - flex 컨테이너(세로 배치)
+  */
+  .bodybox {
+    width: 100%;
+    max-width: 475px;
+    height: 100vh;
+    margin: 0 auto;
+    background-color: #F8F6E9;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* ========== HEADER 1: 로고 ========== */
+  .header1 {
+    flex-shrink: 0;
+    text-align: center;
+    padding: 10px;
+    padding-bottom: 0;
+  }
+  .header1 .logo {
+    max-width: 100px;
+    width: 50%;
+  }
+  
+  /* 장바구니 리스트: 가로 중앙 정렬, 아래 .item-list가 스크롤 */
+  .cart-list {
+    width: 90%;
+    margin: 0 auto 10px;  /* 중앙 정렬 + 아래쪽 10px 간격 (cart-summary와 거리) */
+    background-color: #EAE4D3;
+    border-radius: 8px;
+    padding: 10px;
+    flex-shrink: 0;
+    /* 전체 높이에서 헤더1(로고) 높이 + cart-summary(120px) + cart-actions(자동 2줄) 고려 */
+    /* 임의로 조금 넉넉히 잡고 calc(100% - 270px) 예시 */
+    height: calc(100% - 330px);
+    display: flex;
+    flex-direction: column;
+  }
+  
+  /* cart-header (장바구니 타이틀) */
+  .cart-header {
+    height: 40px;
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* item-list와 간격 */
+    border-bottom: 1px solid #ccc;
+  }
+  .cart-header h1 {
+    font-size: 1.2rem;
+  }
+  
+  /* 스크롤이 실제로 발생하는 영역 */
+  .item-list {
+    flex: 1;              /* 남은 공간을 채움 */
+    overflow-y: auto;     /* 스크롤 */
+  }
+  
+  /* 장바구니 아이템 */
+  .cart-item {
+    background-color: #fff;
+    border-radius: 8px;
+    margin: 10px 0;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+  .item-img {
+    width: 50px;
+    height: 50px;
+    margin-right: 10px;
+  }
+  .item-info {
+    flex: 1;
+  }
+  .item-quantity {
+    display: flex;
+    align-items: center;
+  }
+  .item-quantity button {
+    width: 30px;
+    height: 30px;
+  }
+  
+  /* 금액 박스: 고정 높이 120px (예시) */
+  .cart-summary {
+    flex-shrink: 0;
+    height: 120px;
+    padding: 10px 20px;
+    border-top: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+  }
+  .cart-summary p {
+    margin-bottom: 5px;
+  }
+
+  .price-row1 {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 5px;
+  }
+
+  .price-row2 p{
+    padding-top: 5px;
+    font-weight: 700;
+  }
+  
+  /* 버튼 영역 (2줄 구성) */
+  .cart-actions {
+    flex-shrink: 0;
+    /* 고정 높이를 없애고, 내용에 맞게 자동 높이 */
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  
+  /* 첫 번째 줄: 두 개 버튼 반반 */
+  .btn-row1 {
+    display: flex;
+    gap: 10px;
+  }
+  .btn-row1 button {
+    flex: 1;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* 두 번째 줄: 버튼 하나 전체 */
+  .btn-row2 {
+    display: flex;
+  }
+  .btn-row2 button {
+    flex: 1;
+    height: 40px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* 버튼 예시 스타일 */
+  .continue-btn {
+    background-color: #E7E7BE;
+  }
+  .select-order-btn {
+    background-color: #E7E7BE;
+  }
+  .order-all-btn {
+    background-color: #FAE9C0;
+  }
+  

@@ -1,0 +1,137 @@
+/* ========== 기본 리셋 ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== BODY 레이아웃 ========== */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* html, body 높이 100% 설정 */
+html, body {
+    height: 100%;
+  }
+  
+/* 
+  bodybox: 모바일/웹 공용 레이아웃
+  - 모바일에서는 가로폭 100% 
+  - 데스크탑(웹)에서는 최대 475px 
+  - 높이는 100vh로, 스크롤 가능 
+*/
+.bodybox {
+  width: 100%;
+  max-width: 475px;
+  height: 100vh;
+  overflow-y: auto;   /* 내용이 많을 경우 세로 스크롤 */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #F8F6E9;
+
+}
+
+/* container: 실제 콘텐츠를 감싸는 컨테이너 */
+.container {
+  width: 100%;
+  background-color: #F8F6E9;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== HEADER 1: 로고 ========== */
+.header1 {
+  text-align: center;
+  padding: 10px;
+  padding-bottom: 0;
+}
+.header1 .logo {
+  max-width: 100px;
+  width: 50%;
+}
+
+/* ========== HEADER 2: 장바구니 버튼 ========== */
+.header2 {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  padding-top: 0;
+}
+.cart-btn {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+/* ========== HEADER 3: 가로 메뉴 리스트 ========== */
+.header3 {
+  background-color: #F8F6E9;
+  padding: 10px;
+}
+.nav-list {
+  display: flex;
+  list-style: none;
+  gap: 10px;
+  justify-content: center;
+  align-items: center;
+}
+.nav-list li {
+  padding: 6px 10px;
+  background-color: #eee;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+/* ========== MAIN CONTENT ========== */
+.main-content {
+  flex: 1; /* 남은 공간을 메인 콘텐츠가 차지 */
+  padding: 20px;
+}
+
+/* 메인컨텐츠1: 세트메뉴 박스 */
+.set-menu {
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 20px;
+  text-align: center;
+  border: 1px solid #ccc;
+}
+.set-menu h2 {
+  font-size: 1.2rem;
+  margin-bottom: 8px;
+}
+.set-menu p {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+/* 메뉴 그리드: 한 줄에 3개씩 배치 */
+.menu-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.menu-item {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  height: 120px; /* 임의 높이 (추후 이미지/내용에 따라 조절) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.9rem;
+  color: #333;
+}
