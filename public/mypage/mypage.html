@@ -5,19 +5,23 @@
   <!-- 모바일 기기에서 적절한 스케일 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>마이페이지</title>
-  <link rel="stylesheet" href="mypage.css">
+  <link rel="stylesheet" href="/mypage/mypage.css">
 </head>
 <body>
   <div class="bodybox">
     <div class="container">
-      <!-- header1: 로고 영역 -->
+      <!-- header1: 로고 -->
       <header class="header1">
-        <img src="LOGO.jpg" alt="FOR:D 로고" class="logo">
+        <a href="/menupage/menupage.html">
+          <img src="/LOGO.jpg" alt="FOR:D 로고" class="logo">
+        </a>
       </header>
+      
       <!-- header2: 내비게이션 버튼 영역 -->
       <header class="header2">
-        <button class="cart-btn" onclick="location.href='cartpage.html'">장바구니</button>
-        <button class="cart-btn" onclick="location.href='menupage.html'">메뉴</button>
+        <button class="cart-btn" onclick="location.href='/cartpage/cartpage.html'">장바구니</button>
+        <button class="cart-btn" onclick="location.href='/menupage/menupage.html'">메뉴</button>
+        <button class="cart-btn" id="logout-btn">로그아웃</button>
       </header>
       <!-- main-content: 마이페이지 콘텐츠 -->
       <main class="main-content">
@@ -34,5 +38,7 @@
     </div>
   </div>
   <script src="mypage.js"></script>
+  <!-- ES Module 사용을 위해 type="module" 설정 -->
+  <script type="module" src="/mypage/mypage.js"></script>
 </body>
 </html>

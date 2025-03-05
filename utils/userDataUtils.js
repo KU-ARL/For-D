@@ -1,14 +1,5 @@
 const mysql = require('mysql2/promise');
-
-const pool = mysql.createPool({
-  host: process.env.DB_HOST,         // DB 호스트
-  user: process.env.DB_USER,        // DB 사용자
-  password: process.env.DB_PASS,// DB 비밀번호
-  database: process.env.DB_NAME,    // DB 이름
-  waitForConnections: true,
-  connectionLimit: 10,
-  queueLimit: 0
-});
+const pool = require('./dbUtils');
 
 /**
  * 카카오 로그인으로 받은 사용자 정보를 DB에 저장합니다.
@@ -51,4 +42,15 @@ async function getUserByEmail(email) {
   }
 }
 
-module.exports = { saveUser, getUserByEmail };
+async function getUserById(id) {
+  const query = 'SELECT * FROM users WHERE id = ?';
+  try {
+    const [rows] = await pool.execute(query, [id]);
+    return rows[0];
+  } catch (error) {
+    console.error('Error fetching user:', error);
+    throw error;
+  }
+}
+
+module.exports = { saveUser, getUserByEmail, getUserById };

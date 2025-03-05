@@ -1,178 +1,134 @@
 require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
-const helmet = require('helmet');
-const cookieParser = require('cookie-parser');
 const path = require('path');
-const authRoutes = require('./routes/authRoutes');
-
-const passport = require('passport');
-const session = require('express-session');
-const KakaoStrategy = require('passport-kakao').Strategy;
-const mysql = require('mysql2/promise');
-const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+// const session = require('express-session');
+// const axios = require('axios');
 
 const app = express();
+const port = process.env.PORT;
 
-// ✅ 정적 파일 서빙 (index.html 포함)
+
+// ✅ 정적 파일 서빙
 app.use(express.static(path.join(__dirname, 'public')));
-
-// ✅ 정적 파일 서빙 (index.html 포함)
 app.use(express.static(path.join(__dirname, 'resources')));
+app.use(express.static(path.join(__dirname, 'utils')));
 
-// ✅ 기본 루트 경로에서 index.html 제공
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', '/startpage.html'));
-});
+// ✅ Utils 함수 불러오기기
+const authUtils = require('./utils/kakoOauthUtils');
+const userDataUtils = require('./utils/userDataUtils');
+const jwtUtils = require('./utils/jwtUtils');
 
-// MySQL 연결
-const db = mysql.createPool({
-    host: process.env.DB_HOST,
-    user: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
-  });
-
-
-app.use(express.json());
-
-
-app.use(
-    cors({
-        origin: ["http://localhost:5000", "http://127.0.0.1:5000"], // CORS 오류 해결
-        credentials: true,
-    })
-);
-
+// ✅ 클라이언트 쿠키 읽기
 app.use(cookieParser());
 
 
-// ✅ CSP 정책 수정
-app.use(
-    helmet({
-        contentSecurityPolicy: {
-            directives: {
-                defaultSrc: ["'self'"],
-                scriptSrc: ["'self'", "'unsafe-inline'"],
-                connectSrc: ["'self'", "http://localhost:5000"], // API 요청 허용
-            },
-        },
-    })
-);
 
+// ✅ 기본 루트 경로에서 index.html 제공
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', '/startpage/startpage.html'));
+});
 
-const paymentRoutes = require("./routes/paymentRoutes");
+// 카카오 로그인 시작: 클라이언트를 카카오 인증 페이지로 리다이렉트
+app.get('/auth/kakao', (req, res) => {
 
+    const KAKAO_CLIENT_ID = process.env.KAKAO_CLIENT_ID;
+    const KAKAO_CLIENT_SECRET = process.env.KAKAO_CLIENT_SECRET;
+    const KAKAO_REDIRECT_URI = process.env.KAKAO_REDIRECT_URI;
 
+    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_CLIENT_ID}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code&prompt=login`;  // prompt=login이 있어야 매번 id/pw 입력
+    res.redirect(kakaoAuthUrl);
 
+});
 
+// 카카오 인증 후 리다이렉트 받을 콜백 라우트
+app.get('/auth/kakao/callback', async (req, res) => {
+    const { code } = req.query;
 
-
-// ✅ 결제 API 라우트
-app.use("/api/payment", paymentRoutes);
-
-// ✅ 로그인 API 라우트
-app.use('/api/auth', authRoutes);
-
-
-
-
-// 세션 설정
-app.use(session({
-    secret: process.env.JWT_SECRET,
-    resave: false,
-    saveUninitialized: false
-  }));
-  
-  app.use(passport.initialize());
-  app.use(passport.session());
-  
-
-  // Passport 카카오 로그인 설정
-  passport.use(new KakaoStrategy({
-    clientID: process.env.KAKAO_CLIENT_ID,
-    clientSecret: process.env.KAKAO_CLIENT_SECRET,
-    callbackURL: process.env.KAKAO_REDIRECT_URI
-  }, async (accessToken, refreshToken, profile, done) => {
-    try {
-      const { id, kakao_account } = profile;
-      const email = kakao_account?.account_email || "gyuho1215@test.com";
-      const name = kakao_account?.profile_nickname || "카카오 사용자";
-      const gender = kakao_account?.gender || "Other";  // 남(male) / 여(female) / 기타(Other)
-      
-      // MySQL에 사용자 정보 저장
-      const [user] = await db.query(`
-        SELECT * FROM users WHERE social_login_type = 'kakao' AND social_login_id = ?
-      `, [id]);
-  
-      let userId;
-      
-      if (user.length === 0) {
-        // 새로운 사용자 가입
-        const [result] = await db.query(`
-          INSERT INTO users (name, email, gender, social_login_type, social_login_id, created_at, updated_at)
-          VALUES (?, ?, ?, ?, ?, NOW(), NOW())
-        `, [name, email, gender, 'kakao', id]);
-  
-        userId = result.insertId;
-      } else {
-        userId = user[0].id;
-      }
-  
-      const token = jwt.sign({ id: userId }, process.env.JWT_SECRET, { expiresIn: '1h' });
-  
-      return done(null, { token, userId, name, email });
-    } catch (error) {
-      return done(error, null);
+    if (!code) {
+        return res.status(400).send('Authorization code not provided.');
     }
-  }));
 
-  passport.serializeUser((user, done) => {
-    console.log("Serializing user:", user); // 로그 추가
-    done(null, user.userId); // user 객체에서 userId만 저장
-  });
-  
-  passport.deserializeUser(async (id, done) => {
     try {
-      const [user] = await db.query("SELECT id, name, email, gender FROM users WHERE id = ?", [id]);
-  
-      if (user.length === 0) {
-        return done(null, false);
-      }
-  
-      console.log("Deserialized user:", user[0]); // 로그 추가
-      done(null, user[0]);
-    } catch (error) {
-      done(error, null);
-    }
-  });
-  
-  
-  // 로그인 라우트
-  app.get('/auth/kakao', passport.authenticate('kakao'));
-  
-  // 로그인 콜백
-  app.get('/auth/kakao/callback', passport.authenticate('kakao', { failureRedirect: '/' }), (req, res) => {
-    res.json({ token: req.user.token, message: '카카오 로그인 성공' });
-  });
-  
-  // 사용자 정보 확인 (JWT 필요)
-  app.get('/profile', async (req, res) => {
-    try {
-      const token = req.headers.authorization?.split(' ')[1];
-      if (!token) return res.status(401).json({ message: '토큰이 필요합니다' });
-  
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      const [user] = await db.query('SELECT id, name, email, gender FROM users WHERE id = ?', [decoded.id]);
-  
-      if (user.length === 0) return res.status(404).json({ message: '사용자를 찾을 수 없습니다' });
-  
-      res.json(user[0]);
-    } catch (error) {
-      res.status(401).json({ message: '유효하지 않은 토큰' });
-    }
-  });
+        // authUtils의 로직을 호출하여 카카오 사용자 정보를 받아옴
+        const { userInfo, accessToken } = await authUtils.getKakaoUserInfo(code);  // 카카오 계정에 접근하는 엑세스 토큰은 일단 받아만 둠.
+    
+        // DB에 사용자 정보 저장 (새로운 사용자이면 INSERT, 기존이면 UPDATE)
+        await userDataUtils.saveUser({
+            name: userInfo.name,
+            account_email: userInfo.account_email,
+            gender: userInfo.gender,
+            phone_number: userInfo.phone_number,
+            profile_image: userInfo.profile_image,
+            profile_nickname: userInfo.profile_nickname
+        });
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => console.log(`✅ Server running on http://0.0.0.0:${PORT}`));
 
+
+        // DB에서 사용자를 조회하여 id 획득 (users 테이블과 연결된 기준)
+        const userRecord = await userDataUtils.getUserByEmail(userInfo.account_email);
+        if (!userRecord) {
+          return res.status(500).send("사용자 정보를 찾을 수 없습니다.");
+        }
+    
+        // 사용자 id를 이용하여 JWT 발행 및 DB 저장
+        const token = await jwtUtils.generateAndStoreJwt(userRecord.id);
+    
+        // JWT를 httpOnly 쿠키에 저장
+        res.cookie('jwt_token', token, { httpOnly: true, maxAge: 3600000 });
+
+    
+        // 마이페이지로 리다이렉트
+        res.redirect('/menupage/menupage.html');
+
+
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('인증 과정 중 오류가 발생하였습니다.');
+    }
+});
+
+
+
+// API 엔드포인트: JWT 토큰을 검증한 후, DB에서 사용자 정보 조회
+app.get('/api/user', jwtUtils.verifyJwt, async (req, res) => {
+  try {
+    const userRecord = await userDataUtils.getUserById(req.user.user_id);
+    if (!userRecord) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+    res.json(userRecord);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'Error fetching user data' });
+  }
+});
+
+// 카카오 로그아웃 엔드포인트: 쿠키 제거 (필요 시 DB의 토큰 삭제 추가 가능)
+app.get('/auth/kakao/logout', jwtUtils.verifyJwt, async (req, res) => {
+  try {
+    // 카카오 로그아웃 API 호출 (주의: 이 예제에서는 JWT와 카카오 액세스 토큰이 분리되어 있음)
+    // 실제 카카오 로그아웃 API는 별도의 액세스 토큰이 필요하므로, 상황에 맞게 조정해야 합니다.
+    // await axios.post('https://kapi.kakao.com/v1/user/logout', null, {
+    //   headers: {
+    //     'Authorization': `Bearer ${req.cookies.jwt_token}`
+    //   }
+    // });
+    res.clearCookie('jwt_token');
+    res.send('카카오 로그아웃이 완료되었습니다.');
+  } catch (error) {
+    console.error('Logout error:', error.response ? error.response.data : error.message);
+    res.status(500).send('로그아웃 처리 중 오류가 발생하였습니다.');
+  }
+});
+
+app.get('/api/check-token', (req, res) => {
+  const token =
+    req.cookies.jwt_token ||
+    (req.headers.authorization && req.headers.authorization.split(' ')[1]);
+  res.json({ token });
+});
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

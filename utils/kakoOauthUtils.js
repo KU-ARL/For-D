@@ -31,7 +31,7 @@ async function getKakaoUserInfo(code) {
     });
     
 
-    // 엑세스 토큰을 통해 얻어온 사용자 정보보
+    // 엑세스 토큰을 통해 얻어온 사용자 정보
     const kakaoAccount = userResponse.data.kakao_account;
     const profile = kakaoAccount.profile || {};
     

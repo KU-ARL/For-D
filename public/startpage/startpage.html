@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>로그인 시작 페이지</title>
   <!-- CSS 연결 -->
-  <link rel="stylesheet" href="startpage.css">
+  <link rel="stylesheet" href="/startpage/startpage.css">
 </head>
 <body>
   <!-- bodybox: 모바일/웹 공용 레이아웃 최상위 -->
@@ -22,22 +22,24 @@
       <main class="main-content">
         <section class="login-section">
           <div class="divider"></div>
+
           <!-- 로그인 버튼 영역 -->
           <button class="login-btn">
             <div id="kakao_login">
-              <!-- 이미지 클릭 시 menupage.html로 이동 -->
-              <a href="menupage.html">
                 <img src="/kakao_login_medium_narrow.png" alt="카카오 로그인">
-              </a>
+              
             </div>
             <div id="naver_login">
               <img src="/btnG_완성형.png" alt="네이버 로그인">
             </div>
+            <button class="login-btn" id="no_login" onclick="window.location.href='/menupage/menupage.html'">
+              일단 들어갈래
+            </button>            
           </button>
         </section>
       </main>
     </div>
   </div>
 </body>
-<script src="startpage.js"></script>
+<script src="/startpage/startpage.js"></script>
 </html>
