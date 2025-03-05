@@ -104,18 +104,11 @@ app.get('/api/user', jwtUtils.verifyJwt, async (req, res) => {
   }
 });
 
-// 카카오 로그아웃 엔드포인트: 쿠키 제거 (필요 시 DB의 토큰 삭제 추가 가능)
-app.get('/auth/kakao/logout', jwtUtils.verifyJwt, async (req, res) => {
+// 로그아웃 엔드포인트: 쿠키 제거
+app.get('/auth/logout', jwtUtils.verifyJwt, async (req, res) => {
   try {
-    // 카카오 로그아웃 API 호출 (주의: 이 예제에서는 JWT와 카카오 액세스 토큰이 분리되어 있음)
-    // 실제 카카오 로그아웃 API는 별도의 액세스 토큰이 필요하므로, 상황에 맞게 조정해야 합니다.
-    // await axios.post('https://kapi.kakao.com/v1/user/logout', null, {
-    //   headers: {
-    //     'Authorization': `Bearer ${req.cookies.jwt_token}`
-    //   }
-    // });
     res.clearCookie('jwt_token');
-    res.send('카카오 로그아웃이 완료되었습니다.');
+    res.send('로그아웃이 완료되었습니다.');
   } catch (error) {
     console.error('Logout error:', error.response ? error.response.data : error.message);
     res.status(500).send('로그아웃 처리 중 오류가 발생하였습니다.');

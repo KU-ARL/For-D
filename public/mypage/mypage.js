@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function() {
         // 토큰이 있으면 로그인 상태: 버튼을 "로그아웃"으로 표시하고 로그아웃 로직 실행
         authButton.textContent = "로그아웃";
         authButton.addEventListener('click', () => {
-          fetch('/auth/kakao/logout')
+          fetch('/auth/logout')
             .then(response => {
               if (response.ok) {
                 window.location.href = '/';
