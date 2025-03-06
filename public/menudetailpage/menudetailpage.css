@@ -1,0 +1,211 @@
+/* ========== 기본 리셋 ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* ========== BODY 레이아웃 ========== */
+body {
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+}
+
+/* html, body 높이 100% 설정 */
+html, body {
+    height: 100%;
+  }
+  
+/* 
+  bodybox: 모바일/웹 공용 레이아웃
+  - 모바일에서는 가로폭 100% 
+  - 데스크탑(웹)에서는 최대 475px 
+  - 높이는 100vh로, 스크롤 가능 
+*/
+.bodybox {
+  width: 100%;
+  max-width: 475px;
+  height: 100vh;
+  overflow-y: auto;   /* 내용이 많을 경우 세로 스크롤 */
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  background-color: #F8F6E9;
+
+}
+
+/* container: 실제 콘텐츠를 감싸는 컨테이너 */
+.container {
+  width: 100%;
+  background-color: #F8F6E9;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== HEADER 1: 로고 ========== */
+.header1 {
+  text-align: center;
+  padding: 10px;
+  padding-bottom: 0;
+}
+.header1 .logo {
+  max-width: 100px;
+  width: 50%;
+}
+
+/* ========== HEADER 2: 장바구니 버튼 ========== */
+.header2 {
+  display: flex;
+  justify-content: flex-end;
+  padding: 10px;
+  padding-top: 0;
+}
+.cart-btn {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  padding: 8px 16px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+
+  /* ========== 메인 콘텐츠 영역 ========== */
+  .main-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  /* 메뉴 상세 카드 */
+  .menu-detail-card {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 16px;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  /* 상세 이미지 */
+  .detail-image {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 16px;
+  }
+  
+  /* 상세 정보 */
+  .detail-info {
+    width: 100%;
+    text-align: center;
+  }
+  .detail-name {
+    font-size: 1.5rem;
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: #333;
+  }
+  .detail-price {
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+    color: #333;
+  }
+  .detail-origin {
+    font-size: 1rem;
+    color: #666;
+  }
+  
+
+
+/* 옵션 드롭다운 관련 스타일 */
+.dropdown-label {
+  font-size: 12px;
+  margin: 10px 0 4px 0;
+  font-weight: bold;
+  color: rgb(50, 50, 50);
+}
+
+.dropdown {
+  position: relative;
+  margin-bottom: 12px;
+}
+
+.dropbtn {
+  display: block;
+  border: 2px solid rgb(94, 94, 94);
+  border-radius: 4px;
+  background-color: #fcfcfc;
+  font-weight: 400;
+  color: rgb(124, 124, 124);
+  padding: 12px;
+  width: 240px;
+  text-align: left;
+  cursor: pointer;
+  font-size: 12px;
+  position: relative;
+}
+
+.dropbtn_icon {
+  font-family: 'Material Icons';
+  vertical-align: middle;
+}
+
+.dropbtn_content {
+  vertical-align: middle;
+}
+
+.dropbtn_click {
+  font-family: 'Material Icons';
+  font-size: 16px;
+  color: #3b3b3b;
+  float: right;
+  vertical-align: middle;
+  cursor: pointer;
+}
+
+.dropdown-content {
+  display: none;
+  font-weight: 400;
+  background-color: #fcfcfc;
+  min-width: 240px;
+  border-radius: 8px;
+  max-height: 160px;
+  overflow-y: auto;
+  box-shadow: 0px 0px 10px 3px rgba(190, 190, 190, 0.6);
+  position: absolute;
+  z-index: 1;
+}
+
+.dropdown-content div {
+  padding: 12px 20px;
+  font-size: 12px;
+  color: rgb(37, 37, 37);
+  cursor: pointer;
+}
+
+.dropdown-content div:hover {
+  background-color: rgb(226, 226, 226);
+}
+
+/* show 클래스로 표시 */
+.dropdown-content.show {
+  display: block;
+}
+
+/* 옵션 그룹 컨테이너 (각 드롭다운이 하나의 그룹으로 묶임) */
+.option-group {
+  margin-bottom: 16px;
+}
+

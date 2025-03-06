@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>메뉴 상세 페이지</title>
+  <link rel="stylesheet" href="/menudetailpage/menudetailpage.css">
+</head>
+<body>
+  <div class="bodybox">
+    <div class="container">
+      <!-- header1: 로고 -->
+      <header class="header1">
+        <a href="/menupage/menupage.html">
+          <img src="/LOGO.jpg" alt="FOR:D 로고" class="logo">
+        </a>
+      </header>
+
+      <!-- header2: 장바구니, 마이페이지 버튼 -->
+      <header class="header2">
+        <button class="cart-btn" onclick="location.href='/cartpage/cartpage.html'">장바구니</button>
+        <button class="cart-btn" id="mypage-btn" onclick="location.href='/mypage/mypage.html'">마이페이지</button>
+      </header>
+
+      <!-- 메인 콘텐츠: 메뉴 상세 정보 및 옵션 표시 영역 -->
+      <main class="main-content">
+        <div id="menu-detail">
+          <!-- 상품 상세 정보가 동적 추가 -->
+        </div>
+        <div id="menu-options">
+          <!-- 옵션 그룹들이 동적 추가가 -->
+        </div>
+      </main>
+    </div>
+  </div>
+  <script src="/menudetailpage/menudetailpage.js"></script>
+</body>
+</html>

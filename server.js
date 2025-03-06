@@ -18,6 +18,7 @@ app.use(express.static(path.join(__dirname, 'utils')));
 const authUtils = require('./utils/kakoOauthUtils');
 const userDataUtils = require('./utils/userDataUtils');
 const jwtUtils = require('./utils/jwtUtils');
+const itemsUtils = require('./utils/itemsUtils');
 
 // ✅ 클라이언트 쿠키 읽기
 app.use(cookieParser());
@@ -121,6 +122,52 @@ app.get('/api/check-token', (req, res) => {
     (req.headers.authorization && req.headers.authorization.split(' ')[1]);
   res.json({ token });
 });
+
+
+// 상품 목록 조회 API
+app.get('/api/items', async (req, res) => {
+  try {
+    console.log("api items 호출 성공")
+    // items 테이블에서 전체 상품 정보를 가져옵니다.
+    const item_json = await itemsUtils.getItems();
+    console.log(await itemsUtils.getItems())
+    res.json(item_json);  // JSON 형태로 응답
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '서버 에러' });
+  }
+});
+
+// 단일 상품 상세 정보 API
+app.get('/api/items/:itemId', async (req, res) => {
+  try {
+    const itemId = req.params.itemId;
+    console.log("api item detail 호출 성공, itemId:", itemId);
+    const item = await itemsUtils.getItemById(itemId);
+    if (!item) {
+      return res.status(404).json({ message: '상품을 찾을 수 없습니다.' });
+    }
+    res.json(item);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '서버 에러' });
+  }
+});
+
+
+// 단일 상품 옵션 정보 API
+app.get('/api/items/:itemId/options', async (req, res) => {
+  try {
+    const itemId = req.params.itemId;
+    console.log("api item options 호출 성공, itemId:", itemId);
+    const options = await itemsUtils.getItemOptions(itemId);
+    res.json(options);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: '서버 에러' });
+  }
+});
+
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
