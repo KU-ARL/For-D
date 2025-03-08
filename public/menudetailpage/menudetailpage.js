@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
 });
 
+
+///// ---------------- 상세 정보 생성 함수 정의 ---------------- /////
+
 // 상품 상세 정보를 렌더링하는 함수
 function renderMenuDetail(item) {
   const detailContainer = document.getElementById('menu-detail');
@@ -46,6 +49,11 @@ function renderMenuDetail(item) {
   `;
   detailContainer.innerHTML = html;
 }
+
+
+///// ---------------- 옵션 박스 생성 함수 ---------------- /////
+
+
 // 중복된 옵션 그룹들을 그룹화하는 함수
 function groupOptionGroups(rawGroups) {
   const grouped = {};
@@ -133,7 +141,11 @@ function createDropdown(optionGroup) {
       e.stopPropagation();
       contentSpan.textContent = choice.value + (choice.extra_price > 0 ? ` (+${choice.extra_price}원)` : '');
       dropdownContent.classList.remove('show');
-      // 선택한 옵션 데이터를 저장하는 로직 추가 가능
+      
+      /////////////////////////////////////////////////////////////////////////////////////////////
+      // ------------------ 선택한 옵션을 기억해서 장바구니로 넣는 로직 추가 예정 ------------------ //
+      /////////////////////////////////////////////////////////////////////////////////////////////
+      
     });
     dropdownContent.appendChild(choiceDiv);
   });

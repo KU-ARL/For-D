@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>메뉴 페이지</title>
+  <title>For:D Menu</title>
   <link rel="stylesheet" href="/menupage/menupage.css">
 </head>
 <body>
@@ -18,8 +18,8 @@
 
       <!-- header2: 장바구니, 마이페이지 버튼 -->
       <header class="header2">
-        <button class="cart-btn" onclick="location.href='/cartpage/cartpage.html'">장바구니</button>
-        <button class="cart-btn" id="mypage-btn" onclick="location.href='/mypage/mypage.html'">마이페이지</button>
+        <button class="header-btn" id="cart-btn" onclick="location.href='/cartpage/cartpage.html'">장바구니</button>
+        <button class="header-btn" id="mypage-btn" onclick="location.href='/mypage/mypage.html'">마이페이지</button>
       </header>
 
       
@@ -28,9 +28,10 @@
         <ul class="nav-list">
           <!-- data-category 속성에 실제 DB의 category_code를 맞춰주세요 -->
           <li data-category="sandwich">샌드위치</li>
-          <li data-category="salad">샐러드</li>
-          <li data-category="bakery">베이커리</li>
-          <li data-category="drink">음료</li>
+          <li data-category="salad">포케/샐러드</li>
+          <li data-category="bakery">브레드/요거볼</li>
+          <li data-category="drink">커피</li>
+          <li data-category="drink">수제과일청</li>
           <li data-category="best">베스트</li>
         </ul>
       </header>
@@ -44,13 +45,12 @@
           <p>샌드위치 / 샐러드 + 음료 세트</p>
         </section>
 
-        <!-- 메뉴 그리드: 동적으로 아이템이 들어갈 곳 -->
+        <!-- 메인컨텐츠2: 메뉴 그리드: 동적으로 아이템이 들어갈 곳 -->
         <section class="menu-grid"></section>
       </main>
     </div>
   </div>
 
-  <!-- JS 파일 -->
   <script src="/menupage/menupage.js"></script>
 </body>
 </html>

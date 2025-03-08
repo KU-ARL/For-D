@@ -1,10 +1,7 @@
 const mysql = require('mysql2/promise');
 const pool = require('./dbUtils');
 
-/**
- * 카카오 로그인으로 받은 사용자 정보를 DB에 저장합니다.
- * (이미 존재하면 업데이트)
- */
+// 카카오 로그인으로 받은 사용자 정보를 DB에 저장 (이미 존재하면 업데이트)
 async function saveUser(userInfo) {
   const { name, account_email, gender, phone_number, profile_image, profile_nickname } = userInfo;
   const query = `
@@ -28,9 +25,7 @@ async function saveUser(userInfo) {
   }
 }
 
-/**
- * 이메일을 기준으로 사용자 정보를 조회합니다.
- */
+// 이메일을 기준으로 사용자 정보를 조회
 async function getUserByEmail(email) {
   const query = 'SELECT * FROM users WHERE email = ?';
   try {
@@ -42,6 +37,8 @@ async function getUserByEmail(email) {
   }
 }
 
+
+// id를 기준으로 사용자 정보를 조회
 async function getUserById(id) {
   const query = 'SELECT * FROM users WHERE id = ?';
   try {

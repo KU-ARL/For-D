@@ -9,7 +9,6 @@
 
 /* 바디: 전체 화면을 채우며 중앙 정렬 */
 body {
-  font-family: 'Helvetica Neue', Arial, sans-serif;
   background-color: #ffffff;
   display: flex;
   align-items: center;
@@ -17,7 +16,6 @@ body {
   min-height: 100vh;
 }
 
-/* bodybox: 배경색 #F8F6E9, 최대 폭 475px, 전체 높이(100vh) 채움, 내부 콘텐츠 중앙 정렬 */
 .bodybox {
   background-color: #F8F6E9;
   width: 100%;
@@ -71,7 +69,6 @@ body {
   border: none;
   width: 100%;
   border-radius: 4px;
-  cursor: pointer;
   transition: background-color 0.3s;
   display: flex;
   flex-direction: column;
@@ -90,6 +87,7 @@ body {
   max-height: 40px;
   width: 100%;
   object-fit: contain;
+  cursor: pointer;
 }
 
 /* 카카오 로그인 영역 */
@@ -117,5 +115,6 @@ body {
   margin: 0 auto;
   padding: 5px 0;
   height: 30px;
+  cursor: pointer;
 }
 

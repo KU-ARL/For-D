@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', function() {
           fetch('/auth/logout')
             .then(response => {
               if (response.ok) {
-                window.location.href = '/';
+                window.location.href = '/';  // 로그인할 수 있는 startpage로 이동
               } else {
                 alert('로그아웃에 실패했습니다.');
               }
@@ -33,14 +33,14 @@ document.addEventListener('DOMContentLoaded', function() {
     })
     .catch(error => {
       console.error('Error checking token:', error);
-      // 오류가 발생한 경우에도 로그인 버튼으로 처리할 수 있습니다.
+      // 오류가 발생해서 잘 모르겠으면 그냥 로그인 하도록
       authButton.textContent = "로그인";
       authButton.addEventListener('click', () => {
         window.location.href = '/startpage/startpage.html';
       });
     });
 
-  // 사용자 정보 요청 (토큰이 있어야 정상적으로 정보가 반환됩니다)
+  // 사용자 정보 요청 (토큰이 있어야 데이터 반환)
   fetch('/api/user')
     .then(response => {
       if (!response.ok) {

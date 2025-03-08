@@ -2,7 +2,6 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8">
-  <!-- 모바일 기기에서 적절한 스케일 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>마이페이지</title>
   <link rel="stylesheet" href="/mypage/mypage.css">
@@ -19,9 +18,9 @@
       
       <!-- header2: 내비게이션 버튼 영역 -->
       <header class="header2">
-        <button class="cart-btn" onclick="location.href='/cartpage/cartpage.html'">장바구니</button>
-        <button class="cart-btn" onclick="location.href='/menupage/menupage.html'">메뉴</button>
-        <button class="cart-btn" id="logout-btn">로그아웃</button>
+        <button class="header-btn" onclick="location.href='/cartpage/cartpage.html'">장바구니</button>
+        <button class="header-btn" onclick="location.href='/menupage/menupage.html'">메뉴</button>
+        <button class="header-btn" id="logout-btn">로그아웃</button>
       </header>
       <!-- main-content: 마이페이지 콘텐츠 -->
       <main class="main-content">
@@ -37,8 +36,7 @@
       </main>
     </div>
   </div>
-  <script src="mypage.js"></script>
-  <!-- ES Module 사용을 위해 type="module" 설정 -->
-  <script type="module" src="/mypage/mypage.js"></script>
+  
+  <script src="/mypage/mypage.js"></script>
 </body>
 </html>

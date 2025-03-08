@@ -65,13 +65,14 @@ html, body {
   padding: 10px;
   padding-top: 0;
 }
-.cart-btn {
+.header-btn {
   background-color: #fff;
   border: 1px solid #ccc;
   border-radius: 8px;
   padding: 8px 16px;
   cursor: pointer;
   font-size: 0.9rem;
+  margin-left: 10px;
 }
 
 
@@ -86,7 +87,7 @@ html, body {
   
   /* 메뉴 상세 카드 */
   .menu-detail-card {
-    background-color: #fff;
+    background-color: #F8F6E9;
     border: 1px solid #ccc;
     border-radius: 8px;
     padding: 16px;
@@ -146,7 +147,7 @@ html, body {
   display: block;
   border: 2px solid rgb(94, 94, 94);
   border-radius: 4px;
-  background-color: #fcfcfc;
+  background-color: #EAE4D3;
   font-weight: 400;
   color: rgb(124, 124, 124);
   padding: 12px;
@@ -155,11 +156,6 @@ html, body {
   cursor: pointer;
   font-size: 12px;
   position: relative;
-}
-
-.dropbtn_icon {
-  font-family: 'Material Icons';
-  vertical-align: middle;
 }
 
 .dropbtn_content {

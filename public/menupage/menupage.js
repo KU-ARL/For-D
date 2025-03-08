@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function() {
-    const authButton = document.getElementById('mypage-btn');
+    const mypageBtn = document.getElementById('mypage-btn');
   
     // 토큰 존재 여부 확인을 위해 /api/check-token 호출
     fetch('/api/check-token')
@@ -7,24 +7,24 @@ document.addEventListener('DOMContentLoaded', function() {
       .then(data => {
         const token = data.token;
         if (token) {
-          // 토큰이 있으면 로그인 상태: 버튼을 "마이페이지"으로 표시하고 로그아웃 로직 실행
-          authButton.textContent = "마이페이지";
-          authButton.addEventListener('click', () => {
+          // 토큰이 있으면 로그인 상태: 버튼을 "마이페이지"으로 표시하고 마이페이지로 이동
+          mypageBtn.textContent = "마이페이지";
+          mypageBtn.addEventListener('click', () => {
             window.location.href = '/mypage/mypage.html';
           });
         } else {
           // 토큰이 없으면 비로그인 상태: 버튼을 "로그인"으로 표시하고 로그인 페이지로 이동
-          authButton.textContent = "로그인";
-          authButton.addEventListener('click', () => {
+          mypageBtn.textContent = "로그인";
+          mypageBtn.addEventListener('click', () => {
             window.location.href = '/startpage/startpage.html';
           });
         }
       })
       .catch(error => {
         console.error('Error checking token:', error);
-        // 오류가 발생한 경우에도 로그인 버튼으로 처리할 수 있습니다.
-        authButton.textContent = "로그인";
-        authButton.addEventListener('click', () => {
+        // 오류가 발생해서 잘 모르겠으면 그냥 로그인 하라고 하자
+        mypageBtn.textContent = "로그인";
+        mypageBtn.addEventListener('click', () => {
           window.location.href = '/startpage/startpage.html';
         });
       });
@@ -40,6 +40,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 전체 상품 데이터를 보관할 배열
     let allItems = [];
   
+
+    ///// ---------------- 생성 함수 2개 정의 ---------------- /////
+
     // (1) 서버에서 모든 상품 정보를 가져오는 함수
     async function fetchAllItems() {
       const response = await fetch('/api/items');
@@ -55,12 +58,12 @@ document.addEventListener('DOMContentLoaded', async () => {
       // 기존에 표시된 아이템들을 비웁니다.
       menuGrid.innerHTML = '';
   
-      // categoryCode가 "best" 등 특정값인 경우를 제외하고, 
-      // "전체 보기" 기능도 넣으려면 조건 로직을 추가할 수도 있습니다.
-      // 여기서는 'best'가 DB의 category_code 중 하나라고 가정합니다.
+      // ----------- categoryCode에에 "best"를 추가해서 추천 메뉴 생성 가능
+      // ----------- 필터링 하지 않고 allItems 그대로 생성하면 전체 보기 생성 가능
+
       const filteredItems = allItems.filter(item => item.category_code === categoryCode);
   
-      // 필터된 아이템들을 순회하며 DOM 요소를 생성합니다.
+      // 필터된 아이템들을 순회하며 DOM 요소를 생성
       filteredItems.forEach(item => {
         itemDiv = createMenuItemElement(item);
   
@@ -69,16 +72,16 @@ document.addEventListener('DOMContentLoaded', async () => {
       });
     }
   
+
+    ///// ---------------- 생성 함수 2개로 실제 생성 ---------------- /////
     try {
       // 페이지가 로드되면, 먼저 모든 상품을 한번 불러옵니다.
       await fetchAllItems();
   
-      // (3) 기본 카테고리(예: "sandwich")를 먼저 표시하거나,
-      //     원하는 카테고리를 초기 화면으로 설정할 수 있습니다.
+      // (3) 기본 카테고리를 설정해서 먼저 노출시킬 카테고리 변경 가능
       renderItemsByCategory('sandwich');
   
-      // (4) nav-list의 li 클릭 이벤트를 등록하여,
-      //     해당 카테고리에 맞는 상품을 렌더링하도록 합니다.
+      // (4) nav-list의 li 클릭 이벤트 추가, 해당 메뉴 등장
       navList.addEventListener('click', (event) => {
         // 클릭된 요소가 li인지 확인
         if (event.target.tagName === 'LI') {
@@ -98,17 +101,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     itemDiv.classList.add('menu-item');
   
     // 2) 클릭 시 상세 페이지로 이동
-    //    예: /menuDetail/menuDetail.html?itemId=상품ID
     itemDiv.addEventListener('click', () => {
       window.location.href = `/menudetailpage/menudetailpage.html?itemId=${item.id}`;
     });
-    // 커서가 포인터로 보이도록 (hover 시 손 모양)
     itemDiv.style.cursor = 'pointer';
   
     // 이미지
     const img = document.createElement('img');
     img.classList.add('item-image');
-    img.src = item.image_url || '/images/default.png';
+    img.src = item.image_url || '/item_default.png'; // 혹시나 사진 누락되면 대체 이미지
     img.alt = item.name;
   
     // 이름/가격 한 줄

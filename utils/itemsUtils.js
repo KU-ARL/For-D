@@ -47,7 +47,7 @@ async function getItemById(itemId) {
     `;
     try {
       const [rows] = await pool.execute(query, [itemId]);
-      // 그룹핑: 같은 템플릿에 속하는 선택지들을 묶어 옵션 그룹 객체로 만듭니다.
+      // 그룹핑: 같은 템플릿에 속하는 선택지들을 묶어 옵션 그룹 객체로생성성
       const groups = [];
       let currentGroup = null;
       rows.forEach(row => {
