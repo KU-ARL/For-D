@@ -32,51 +32,51 @@ async function getItemById(itemId) {
   async function getItemOptions(itemId) {
     const query = `
       SELECT 
-        ot.id AS template_id, 
-        ot.name AS template_name, 
-        ot.is_required, 
-        ot.option_type,
-        otv.id AS choice_id, 
-        otv.value AS choice_value, 
-        otv.extra_price
-      FROM item_option_templates iot
-      JOIN option_templates ot ON iot.template_id = ot.id
-      LEFT JOIN option_template_values otv ON ot.id = otv.template_id
-      WHERE iot.item_id = ?
-      ORDER BY ot.id, otv.id;
+        io.id AS template_id, 
+        io.name AS template_name, 
+        io.is_required, 
+        ov.id AS choice_id, 
+        ov.value AS choice_value, 
+        ov.extra_price
+      FROM item_option_relations ior
+      JOIN item_options io ON ior.option_id = io.id
+      LEFT JOIN option_values ov ON io.id = ov.option_id
+      WHERE ior.item_id = ?
+      ORDER BY io.id, ov.id;
     `;
-    try {
-      const [rows] = await pool.execute(query, [itemId]);
-      // 그룹핑: 같은 템플릿에 속하는 선택지들을 묶어 옵션 그룹 객체로생성성
-      const groups = [];
-      let currentGroup = null;
-      rows.forEach(row => {
-        if (!currentGroup || currentGroup.template_id !== row.template_id) {
-          currentGroup = {
-            id: row.template_id,
-            name: row.template_name,
-            is_required: row.is_required,
-            option_type: row.option_type,
-            choices: []
-          };
-          groups.push(currentGroup);
-        }
-        if (row.choice_id) {
-          currentGroup.choices.push({
-            id: row.choice_id,
-            value: row.choice_value,
-            extra_price: row.extra_price
-          });
-        }
-      });
-      return groups;
-    } catch (err) {
-      console.error('Error getting item options:', err);
-      throw err;
-    }
-  }
 
-  
+    try {
+        const [rows] = await pool.execute(query, [itemId]);
+
+        // 그룹핑: 같은 옵션 그룹에 속하는 선택지들을 묶기
+        const groups = [];
+        let currentGroup = null;
+        rows.forEach(row => {
+            if (!currentGroup || currentGroup.template_id !== row.template_id) {
+                currentGroup = {
+                    id: row.template_id,
+                    name: row.template_name,
+                    is_required: row.is_required,
+                    choices: []
+                };
+                groups.push(currentGroup);
+            }
+            if (row.choice_id) {
+                currentGroup.choices.push({
+                    id: row.choice_id,
+                    value: row.choice_value,
+                    extra_price: row.extra_price
+                });
+            }
+        });
+
+        return groups;
+    } catch (err) {
+        console.error('Error getting item options:', err);
+        throw err;
+    }
+}
+
 
 
 module.exports = { getItems, getItemById, getItemOptions };

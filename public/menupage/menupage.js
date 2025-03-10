@@ -79,7 +79,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       await fetchAllItems();
   
       // (3) 기본 카테고리를 설정해서 먼저 노출시킬 카테고리 변경 가능
-      renderItemsByCategory('sandwich');
+      renderItemsByCategory('포케/샐러드');
   
       // (4) nav-list의 li 클릭 이벤트 추가, 해당 메뉴 등장
       navList.addEventListener('click', (event) => {
@@ -109,7 +109,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     // 이미지
     const img = document.createElement('img');
     img.classList.add('item-image');
-    img.src = item.image_url || '/item_default.png'; // 혹시나 사진 누락되면 대체 이미지
+    img.src = item.image_url || 'https://ifh.cc/g/YNOJmL.jpg'; // 혹시나 사진 누락되면 대체 이미지
     img.alt = item.name;
   
     // 이름/가격 한 줄

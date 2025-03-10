@@ -37,9 +37,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 // 상품 상세 정보를 렌더링하는 함수
 function renderMenuDetail(item) {
   const detailContainer = document.getElementById('menu-detail');
+  const imageUrl = item.image_url ? item.image_url : 'https://ifh.cc/g/YNOJmL.jpg';
+  
   const html = `
     <div class="menu-detail-card">
-      <img src="${item.image_url}" alt="${item.name}" class="detail-image">
+      <img src="${imageUrl}" alt="${item.name}" class="detail-image">
       <div class="detail-info">
         <h2 class="detail-name">${item.name}</h2>
         <p class="detail-price">${item.price}원</p>

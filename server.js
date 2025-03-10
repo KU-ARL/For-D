@@ -2,9 +2,6 @@ require('dotenv').config();
 const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
-// const session = require('express-session');
-// const axios = require('axios');
-
 const app = express();
 const port = process.env.PORT;
 
@@ -130,7 +127,6 @@ app.get('/api/items', async (req, res) => {
     console.log("api items 호출 성공")
     // items 테이블에서 전체 상품 정보를 가져옵니다.
     const item_json = await itemsUtils.getItems();
-    console.log(await itemsUtils.getItems())
     res.json(item_json);  // JSON 형태로 응답
   } catch (error) {
     console.error(error);
@@ -169,6 +165,7 @@ app.get('/api/items/:itemId/options', async (req, res) => {
 });
 
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
+const host = '0.0.0.0';  // 모든 네트워크에서 접근 가능
+app.listen(port, host, () => {
+  console.log(`Server is running on http://${host}:${port}`);
 });
