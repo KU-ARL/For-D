@@ -56,10 +56,6 @@
     background-color: #EAE4D3;
     border-radius: 8px;
     padding: 10px;
-    flex-shrink: 0;
-    /* 전체 높이에서 헤더1(로고) 높이 + cart-summary(120px) + cart-actions(자동 2줄) 고려 */
-    /* 임의로 조금 넉넉히 잡고 calc(100% - 270px) 예시 */
-    height: calc(100% - 330px);
     display: flex;
     flex-direction: column;
   }
@@ -79,7 +75,7 @@
   /* 스크롤이 실제로 발생하는 영역 */
   .item-list {
     flex: 1;              /* 남은 공간을 채움 */
-    overflow-y: auto;     /* 스크롤 */
+    /*overflow-y: auto;      스크롤 */
   }
   
   /* 장바구니 아이템 */
@@ -87,18 +83,61 @@
     background-color: #fff;
     border-radius: 8px;
     margin: 10px 0;
+    padding: 10px;
+    display: flex;
+    align-items: flex-start; /* 위쪽 정렬 */
+    gap: 10px; /* 이미지와 텍스트 간격 */
+  }
+
+  /* ✅ 상품명 + 가격 + 수량 컨트롤 (한 줄) */
+  .item-header {
     display: flex;
     align-items: center;
-    padding: 10px;
+    justify-content: space-between;
+    width: 100%;
   }
+
+
+  /* 상품 이미지 (왼쪽) */
   .item-img {
-    width: 50px;
-    height: 50px;
-    margin-right: 10px;
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    object-fit: cover;
   }
+
+  /* ✅ 상품 정보 & 옵션 (오른쪽) */
+  .item-content {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 상품 정보 */
   .item-info {
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
+
+  /* 수량 변경 & 삭제 버튼 묶음 */
+  .item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* ✅ 옵션 리스트: 상품 정보 아래에서 전체 너비 차지 */
+  .item-options {
+    list-style: none;
+    padding: 5px 0;
+    font-size: 14px;
+    color: #333;
+    white-space: normal; /* 자동 줄바꿈 */
+    word-break: break-word; /* 긴 단어 줄바꿈 */
+  }
+
+
   .item-quantity {
     display: flex;
     align-items: center;
@@ -108,7 +147,7 @@
     height: 30px;
   }
   
-  /* 금액 박스: 고정 높이 120px (예시) */
+  /* 금액 박스: 고정 높이 120px */
   .cart-summary {
     flex-shrink: 0;
     height: 120px;
@@ -167,7 +206,7 @@
     cursor: pointer;
   }
   
-  /* 버튼 예시 스타일 */
+  /* 버튼 스타일 */
   .continue-btn {
     background-color: #E7E7BE;
   }
@@ -178,3 +217,87 @@
     background-color: #FAE9C0;
   }
   
+
+  /* 상품 이미지: 카드 폭에 상대적으로 조절, 정사각형 유지 */
+.item-img {
+  width: 20%;       /* 카드 폭의 80%를 사용 */
+  height: auto;     
+  aspect-ratio: 1 / 1; /* 정사각형 유지 */
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+
+
+/* ✅ 수량 조절 영역 스타일 */
+.item-quantity {
+  display: flex;
+  align-items: center;
+  gap: 5px; /* 버튼 간격 */
+  background-color: #f4f4f4; /* 배경 색상 */
+  padding: 5px 10px;
+  border-radius: 8px;
+}
+
+/* ✅ 수량 버튼 (-, +) */
+.item-quantity button {
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  border: none;
+  background-color: #e7e7be;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* 버튼 hover 효과 */
+.item-quantity button:hover {
+  background-color: #d6d69b;
+}
+
+/* ✅ 수량 표시 input */
+.item-quantity-count {
+  width: 35px;
+  height: 25px;
+  text-align: center;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  background-color: #fff;
+  pointer-events: none; /* 읽기 전용 (직접 입력 방지) */
+}
+
+/* ✅ 삭제 버튼 (X) */
+.remove-btn {
+  width: 25px;
+  height: 25px;
+  font-size: 14px;
+  font-weight: bold;
+  color: #fff;
+  background-color: #ff6b6b;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+/* 삭제 버튼 hover 효과 */
+.remove-btn:hover {
+  background-color: #e74c3c;
+}
+
+
+/* 리스트 마커(::marker) 제거 */
+.item-options {
+  list-style: none; /* 기본 마커 제거 */
+  padding: 0;
+  margin: 0;
+}
+
+/* 추가적인 패딩을 없애서 들여쓰기 방지 */
+.item-options li {
+  padding-left: 0;
+  margin-left: 0;
+}

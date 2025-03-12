@@ -6,16 +6,24 @@ const app = express();
 const port = process.env.PORT;
 
 
+
 // ✅ 정적 파일 서빙
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(express.static(path.join(__dirname, 'resources')));
 app.use(express.static(path.join(__dirname, 'utils')));
+
+// ✅ JSON 데이터 파싱
+app.use(express.json()); // JSON 요청 본문 파싱
+app.use(express.urlencoded({ extended: true })); // URL-encoded 데이터 파싱
+
+
 
 // ✅ Utils 함수 불러오기기
 const authUtils = require('./utils/kakoOauthUtils');
 const userDataUtils = require('./utils/userDataUtils');
 const jwtUtils = require('./utils/jwtUtils');
 const itemsUtils = require('./utils/itemsUtils');
+const cartUtils = require('./utils/cartUtils');
 
 // ✅ 클라이언트 쿠키 읽기
 app.use(cookieParser());
@@ -161,6 +169,76 @@ app.get('/api/items/:itemId/options', async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: '서버 에러' });
+  }
+});
+
+
+// 🛒 장바구니 추가 API
+app.post('/api/cart', jwtUtils.verifyJwt, async (req, res) => {
+  try {
+      console.log("장바구니 추가 요청:", req.body);
+      const { user_id, item_id, options, quantity } = req.body;
+
+      // 장바구니에 상품 추가
+      const result = await cartUtils.addToCart(user_id, item_id, options, quantity);
+      res.json(result);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: '장바구니 추가 중 오류 발생' });
+  }
+});
+
+// 🛒 장바구니 조회 API
+app.get('/api/cart', jwtUtils.verifyJwt, async (req, res) => {
+  try {
+      const user_id = req.user.user_id;
+      const cartItems = await cartUtils.getCart(user_id);
+      res.json(cartItems);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: '장바구니 조회 중 오류 발생' });
+  }
+});
+
+
+// 🛒 장바구니에서 상품 불러오기 API
+app.get('/api/cart/get', jwtUtils.verifyJwt, async (req, res) => {
+  try {
+      console.log("/api/cart/get\n")
+      const user_id = req.user.user_id;
+      const cartItems = await cartUtils.getCart(user_id);
+      res.json(cartItems);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: '장바구니 조회 중 오류 발생' });
+  }
+});
+
+
+// 🛒 장바구니에서 상품 삭제 API
+app.delete('/api/cart/:cartId', jwtUtils.verifyJwt, async (req, res) => {
+  try {
+      const user_id = req.user.user_id;
+      const cart_id = req.params.cartId;
+      const result = await cartUtils.removeFromCart(user_id, cart_id);
+      res.json(result);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: '장바구니 삭제 중 오류 발생' });
+  }
+});
+
+// 🛒 장바구니 수량 업데이트 API
+app.patch('/api/cart/:cartId', jwtUtils.verifyJwt, async (req, res) => {
+  try {
+      const user_id = req.user.user_id;
+      const cart_id = req.params.cartId;
+      const { quantity } = req.body;
+      const result = await cartUtils.updateCartQuantity(user_id, cart_id, quantity);
+      res.json(result);
+  } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: '장바구니 수량 업데이트 중 오류 발생' });
   }
 });
 

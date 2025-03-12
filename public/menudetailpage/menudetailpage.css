@@ -205,3 +205,42 @@ html, body {
   margin-bottom: 16px;
 }
 
+/* ✅ 장바구니 추가 버튼 기본 스타일 */
+#addToCartButton {
+  width: 100%; /* 전체 너비 */
+  max-width: 200px; /* 버튼 최대 너비 */
+  padding: 12px 10px;
+  font-size: 12px;
+  font-weight: bold;
+  text-align: center;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #FFB400, #FF8800); /* 주황-노랑 그라데이션 */
+  color: white;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  display: block;
+  margin: 20px auto;
+  box-shadow: 2px 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ 마우스 오버 효과 */
+#addToCartButton:hover {
+  background: linear-gradient(135deg, #FFA500, #FF6600);
+  transform: translateY(-2px);
+  box-shadow: 3px 5px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* ✅ 버튼 클릭 시 (active) */
+#addToCartButton:active {
+  transform: translateY(1px);
+  box-shadow: 1px 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* ✅ 비활성화 상태 */
+#addToCartButton:disabled {
+  background: #ddd;
+  color: #888;
+  cursor: not-allowed;
+  box-shadow: none;
+}

@@ -20,8 +20,6 @@ async function generateAndStoreJwt(userId) {
 
 // 토큰을 통해 로그인 상태 검증
 function verifyJwt(req, res, next) {
-  console.log(req)
-  console.log(req.cookies)
   const token = req.cookies.jwt_token || (req.headers.authorization && req.headers.authorization.split(' ')[1]);
   if (!token) {
     return res.status(401).json({ error: 'Token not provided' });
